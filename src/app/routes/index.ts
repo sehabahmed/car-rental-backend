@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { userRoutes } from "../users/user.route";
-import { CarRoutes } from "../car/car.route";
+import { userRoutes } from "../modules/users/user.route";
+import { CarRoutes } from "../modules/car/car.route";
 
 const router = Router();
 

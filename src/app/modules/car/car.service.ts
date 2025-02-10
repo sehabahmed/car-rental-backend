@@ -1,3 +1,4 @@
+import { User } from '../users/user.model';
 import { TCar } from './car.interface';
 import { Car } from './car.model';
 
@@ -28,11 +29,20 @@ const updateCarIntoDB = async (id: string, payload: Partial<TCar>) => {
   return result;
 };
 
-// const deleteCarFromDB = async(id: string, payload)
+const deleteCarFromDB = async (id: string) => {
+  const result = await Car.findByIdAndUpdate(
+    id,
+    { isDeleted: true },
+    { new: true },
+  );
+
+  return result;
+};
 
 export const CarServices = {
   createCarIntoDB,
   getAllCarsFromDB,
   getSingleCarFromDB,
   updateCarIntoDB,
+  deleteCarFromDB
 };
