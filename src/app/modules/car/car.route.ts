@@ -18,7 +18,7 @@ router.get('/', CarControllers.getAllCars);
 
 router.get('/:id', CarControllers.getSingleCarFromDB);
 
-router.patch(
+router.put(
   '/:id',
   validateRequest(updateCarValidationSchema),
   CarControllers.updateCarFromDB,
