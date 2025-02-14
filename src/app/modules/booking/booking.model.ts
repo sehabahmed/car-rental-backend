@@ -1,6 +1,8 @@
 import mongoose, { model, Schema } from 'mongoose';
 import { TBooking } from './booking.interface';
 
+const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+
 const BookingSchema = new mongoose.Schema<TBooking>({
   date: {
     type: Date,
@@ -19,12 +21,13 @@ const BookingSchema = new mongoose.Schema<TBooking>({
   startTime: {
     type: String,
     required: true,
-    match: /^([01]\d|2[0-3]):([0-5]\d)$/,
+    match: timeRegex,
   },
   endTime: {
     type: String,
     required: true,
-    match: /^([01]\d|2[0-3]):([0-5]\d)$/,
+    match: timeRegex,
+    default: null,
   },
   totalCost: {
     type: Number,

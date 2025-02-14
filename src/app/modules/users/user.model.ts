@@ -1,5 +1,5 @@
 import { model, Schema } from 'mongoose';
-import { TUser } from './user.interface';
+import { TUser, UserModel } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../index';
 
@@ -37,8 +37,6 @@ const userSchema = new Schema<TUser>(
   },
 );
 
-
-
 //hashing password and save into DB
 // userSchema.pre('save', async function (next) {
 
@@ -58,14 +56,6 @@ const userSchema = new Schema<TUser>(
 //   }
 //   next();
 // });
-
-
-
-
-
-
-
-
 
 // Password hashing middleware
 // **Hash password before saving**
@@ -92,8 +82,8 @@ const userSchema = new Schema<TUser>(
 //   return await bcrypt.compare(givenPassword, this.password);
 // };
 
+userSchema.statics.isUserExistsByEmail = async function (email: string) {
+  return await User.findOne({ email });
+};
 
-
-
-
-export const User = model<TUser>('User', userSchema);
+export const User = model<TUser, UserModel>('User', userSchema);
