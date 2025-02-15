@@ -3,7 +3,7 @@ import { TUser, UserModel } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../index';
 
-const userSchema = new Schema<TUser>(
+const userSchema = new Schema<TUser, UserModel>(
   {
     name: {
       type: String,
@@ -22,6 +22,7 @@ const userSchema = new Schema<TUser>(
     password: {
       type: String,
       required: true,
+      select: 0
     },
     phone: {
       type: Number,
@@ -37,53 +38,31 @@ const userSchema = new Schema<TUser>(
   },
 );
 
-//hashing password and save into DB
-// userSchema.pre('save', async function (next) {
+// Hash password before saving
+userSchema.pre('save', async function (next) {
+  if (!this.isModified('password')) {
+    return next();
+  }
 
-//   //eslint-disable-next-line @typescript-eslint/no-this-alias
-//   const user = this;
-//   user.password = await bcrypt.hash(
-//     user.password,
-//     Number(config.bcrypt_salt_rounds),
-//   );
-// console.log('hashed password:', user.password)
-//   next();
-// });
+  try {
+    const saltRounds = Number(config.bcrypt_salt_rounds);
+    this.password = await bcrypt.hash(this.password, saltRounds);
+    next();
+  } catch (error: any) {
+    next(error);
+  }
+});
 
-// // set empty string after saving password
-// userSchema.post('save', function (doc, next) {
-//   if (doc.password) {
-//   }
-//   next();
-// });
-
-// Password hashing middleware
-// **Hash password before saving**
-// userSchema.pre('save', async function (next) {
-//   if (!this.isModified('password')) {
-//     return next();
-//   }
-
-//   try {
-//     const saltRounds = Number(config.bcrypt_salt_rounds);
-//     this.password = await bcrypt.hash(this.password, saltRounds);
-//     console.log('hashed password', this.password)
-//     next();
-//   } catch (error: any) {
-//     console.log('bcrypt error:', error)
-//     next(error);
-//   }
-// });
-
-// // **Compare Password Method**
-// userSchema.methods.isPasswordMatched = async function (
-//   givenPassword: string
-// ): Promise<boolean> {
-//   return await bcrypt.compare(givenPassword, this.password);
-// };
-
+//check if user exist by email
 userSchema.statics.isUserExistsByEmail = async function (email: string) {
-  return await User.findOne({ email });
+  return await User.findOne({ email }).select('+password');
+};
+
+// Compare Password Method
+userSchema.statics.isPasswordMatched = async function (
+  givenPassword: string, hashedPassword: string
+): Promise<boolean> {
+  return await bcrypt.compare(givenPassword, hashedPassword);
 };
 
 export const User = model<TUser, UserModel>('User', userSchema);

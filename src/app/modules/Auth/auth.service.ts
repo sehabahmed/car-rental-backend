@@ -13,6 +13,17 @@ const loginUser = async (payload: TLoginUser) => {
     throw new AppError(httpStatus.NOT_FOUND, 'User Not Found');
   }
 
+  //check if password is correct
+
+  const isPasswordMatched = await User.isPasswordMatched(
+    payload?.password,
+    user?.password,
+  );
+
+  if (!isPasswordMatched) {
+    throw new AppError(httpStatus.FORBIDDEN, 'Password does not matched!');
+  }
+
   const jwtPayload = {
     userEmail: user.email,
     role: user.role as string,
@@ -24,7 +35,7 @@ const loginUser = async (payload: TLoginUser) => {
     config.jwt_access_expires_in as string,
   );
 
-  return {accessToken: `Bearer ${accessToken}`};
+  return { accessToken: `Bearer ${accessToken}` };
 };
 
 export const authServices = {
