@@ -9,7 +9,7 @@ import { authControllers } from './auth.controller';
 const router = Router();
 
 router.post(
-  '/login',
+  '/signin',
   validateRequest(loginValidationSchema),
   authControllers.loginUser,
 );

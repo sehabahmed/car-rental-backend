@@ -5,5 +5,17 @@ export const createToken = (
   secret: string,
   expiresIn: string | number,
 ) => {
-  return jwt.sign(jwtPayload, secret, { expiresIn });
+  const token = jwt.sign(jwtPayload, secret, { expiresIn });
+
+  return `Bearer ${token}`;
+};
+
+//extract token with Bearer
+
+export const extractToken = (bearerToken: string) => {
+  if (!bearerToken?.startsWith('Bearer ')) {
+    return null;
+  }
+
+  return bearerToken.split(' ')[1];
 };

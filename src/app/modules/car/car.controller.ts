@@ -43,7 +43,6 @@ const getSingleCarFromDB = catchAsync(async (req, res) => {
 const updateCarFromDB = catchAsync(async (req, res) => {
   const { id } = req.params;
   const updateCar = req.body;
-
   const result = await CarServices.updateCarIntoDB(id, updateCar);
 
   sendResponse(res, {

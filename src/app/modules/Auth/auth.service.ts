@@ -2,7 +2,7 @@ import AppError from '../../errors/AppError';
 import { User } from '../users/user.model';
 import { TLoginUser } from './auth.interface';
 import httpStatus from 'http-status';
-import { createToken } from './auth.utils';
+import { createToken, extractToken } from './auth.utils';
 import config from '../../index';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 
@@ -50,6 +50,16 @@ const loginUser = async (payload: TLoginUser) => {
 //Refresh Token
 
 const refreshToken = async (token: string) => {
+  if (!token) {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid Refresh Token');
+  }
+
+  const rawToken = extractToken(token);
+
+  if (!rawToken) {
+    throw new AppError(httpStatus.UNAUTHORIZED, 'Invalid Refresh Token Format');
+  }
+
   //check if the given token is valid
 
   const decoded = jwt.verify(
@@ -82,5 +92,5 @@ const refreshToken = async (token: string) => {
 
 export const authServices = {
   loginUser,
-  refreshToken
+  refreshToken,
 };

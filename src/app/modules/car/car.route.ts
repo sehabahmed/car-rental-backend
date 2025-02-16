@@ -5,6 +5,8 @@ import {
   updateCarValidationSchema,
 } from './car.validation';
 import { CarControllers } from './car.controller';
+import auth from '../../middleware/auth';
+import { USER_ROLE } from '../users/user.constant';
 
 const router = Router();
 
@@ -20,6 +22,7 @@ router.get('/:id', CarControllers.getSingleCarFromDB);
 
 router.put(
   '/:id',
+  auth(USER_ROLE.admin),
   validateRequest(updateCarValidationSchema),
   CarControllers.updateCarFromDB,
 );
