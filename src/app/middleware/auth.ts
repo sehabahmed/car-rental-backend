@@ -22,9 +22,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
-    console.log('decoded: ', decoded)
-
-    const { userEmail, role, iat } = decoded;
+    const { userEmail, role } = decoded;
 
     const user = await User.isUserExistsByEmail(userEmail);
 

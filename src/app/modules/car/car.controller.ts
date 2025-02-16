@@ -4,6 +4,8 @@ import { CarServices } from './car.service';
 import httpStatus from 'http-status';
 
 const createCar = catchAsync(async (req, res) => {
+  console.log('cookies', req.cookies);
+
   const result = await CarServices.createCarIntoDB(req.body);
 
   sendResponse(res, {
@@ -26,8 +28,7 @@ const getAllCars = catchAsync(async (req, res) => {
 });
 
 const getSingleCarFromDB = catchAsync(async (req, res) => {
-
-    const { id } = req.params;
+  const { id } = req.params;
 
   const result = await CarServices.getSingleCarFromDB(id);
 
@@ -40,9 +41,8 @@ const getSingleCarFromDB = catchAsync(async (req, res) => {
 });
 
 const updateCarFromDB = catchAsync(async (req, res) => {
-
-    const { id } = req.params;
-    const updateCar = req.body;
+  const { id } = req.params;
+  const updateCar = req.body;
 
   const result = await CarServices.updateCarIntoDB(id, updateCar);
 
@@ -55,8 +55,7 @@ const updateCarFromDB = catchAsync(async (req, res) => {
 });
 
 const deletedCarFromDB = catchAsync(async (req, res) => {
-
-    const { id } = req.params;
+  const { id } = req.params;
 
   const result = await CarServices.deleteCarFromDB(id);
 
@@ -73,5 +72,5 @@ export const CarControllers = {
   getAllCars,
   getSingleCarFromDB,
   updateCarFromDB,
-  deletedCarFromDB
+  deletedCarFromDB,
 };

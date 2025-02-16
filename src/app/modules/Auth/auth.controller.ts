@@ -7,7 +7,7 @@ import config from '../../index';
 const loginUser = catchAsync(async (req, res) => {
   const result = await authServices.loginUser(req.body);
 
-  const { token, refreshToken } = result;
+  const { token, refreshToken, user } = result;
 
   res.cookie('refreshToken', refreshToken, {
     secure: config.NODE_ENV === 'production',
@@ -18,7 +18,7 @@ const loginUser = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'User Logged in Successfully',
-    data: { token, refreshToken },
+    data: { user, token },
   });
 });
 
