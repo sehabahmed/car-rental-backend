@@ -23,7 +23,7 @@ router.get(
 router.get('/:id', BookingControlers.getSingleBookingFromDB);
 
 router.put(
-  '/:id',
+  '/return-car',
   auth(USER_ROLE.admin),
   BookingControlers.updateBookingFromDB,
 );
