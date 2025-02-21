@@ -14,11 +14,19 @@ router.post(
   BookingControlers.createBooking,
 );
 
-router.get('/', auth(USER_ROLE.admin), BookingControlers.getAllBooking);
+router.get(
+  '/my-bookings',
+  auth(USER_ROLE.user),
+  BookingControlers.getAllBooking,
+);
 
 router.get('/:id', BookingControlers.getSingleBookingFromDB);
 
-router.put('/:id', BookingControlers.updateBookingFromDB);
+router.put(
+  '/:id',
+  auth(USER_ROLE.admin),
+  BookingControlers.updateBookingFromDB,
+);
 
 router.delete('/:id', BookingControlers.deletedBookingFromDB);
 

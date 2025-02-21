@@ -4,8 +4,14 @@ import { bookingServices } from './booking.service';
 import httpStatus from 'http-status';
 
 const createBooking = catchAsync(async (req, res) => {
+  const user = req.user;
 
-    const result = await bookingServices.createBookingIntoDB(req.body);
+  const bookingData = {
+    ...req.body,
+    user: user._id,
+  };
+
+  const result = await bookingServices.createBookingIntoDB(bookingData);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -16,7 +22,9 @@ const createBooking = catchAsync(async (req, res) => {
 });
 
 const getAllBooking = catchAsync(async (req, res) => {
-  const result = await bookingServices.getAllBookingFromDB();
+  const user = req.user;
+
+  const result = await bookingServices.getAllBookingFromDB(user._id);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -40,10 +48,10 @@ const getSingleBookingFromDB = catchAsync(async (req, res) => {
 });
 
 const updateBookingFromDB = catchAsync(async (req, res) => {
-  const { id } = req.params;
-  const updateCar = req.body;
+  // const { id } = req.params;
+  const { bookingId, endTime } = req.body;
 
-  const result = await bookingServices.updateBookingIntoDB(id, updateCar);
+  const result = await bookingServices.updateBookingIntoDB(bookingId, endTime);
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -71,5 +79,5 @@ export const BookingControlers = {
   getAllBooking,
   getSingleBookingFromDB,
   updateBookingFromDB,
-  deletedBookingFromDB
+  deletedBookingFromDB,
 };

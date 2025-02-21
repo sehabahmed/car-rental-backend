@@ -25,7 +25,6 @@ const BookingSchema = new mongoose.Schema<TBooking>({
   },
   endTime: {
     type: String,
-    required: true,
     match: timeRegex,
     default: null,
   },
