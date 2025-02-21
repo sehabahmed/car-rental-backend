@@ -5,10 +5,10 @@ import sendResponse from '../utils/sendResponse';
 import { userServices } from './user.service';
 import httpStatus from 'http-status';
 
-const createUser = catchAsync(async (req, res) => {
+const signup = catchAsync(async (req, res) => {
   const { password, user: userData } = req.body;
 
-  const result = await userServices.createUserIntoDB(password, userData);
+  const result = await userServices.signupUserIntoDB(password, userData);
 
   if (!result) {
     throw new AppError(httpStatus.BAD_REQUEST, 'Failed to create User!');
@@ -74,7 +74,7 @@ const deleteUser = catchAsync(async (req, res) => {
 });
 
 export const userControllers = {
-  createUser,
+  signup,
   getAllUsers,
   getSingleUser,
   updateUser,
