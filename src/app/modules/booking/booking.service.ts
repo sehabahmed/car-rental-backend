@@ -1,5 +1,7 @@
+import QueryBuilder from '../../builder/QueryBuilder';
 import AppError from '../../errors/AppError';
 import { Car } from '../car/car.model';
+import { bookingSearchableFields } from './booking.constant';
 import { TBooking } from './booking.interface';
 import { Booking } from './booking.model';
 import httpStatus from 'http-status';
@@ -16,7 +18,17 @@ const createBookingIntoDB = async (payload: TBooking) => {
   return populateUserAndCard;
 };
 
-const getAllBookingFromDB = async (userId: string) => {
+const getAllBookingFromDB = async (query: Record<string, unknown>) => {
+  const bookingQuery = new QueryBuilder(Booking.find(), query).search(
+    bookingSearchableFields,
+  );
+
+  const result = await bookingQuery.modelQuery;
+
+  return result;
+};
+
+const myBookings = async (userId: string) => {
   const result = await Booking.find({ user: userId })
     .populate('user')
     .populate('car');
@@ -89,6 +101,7 @@ const deleteBookingFromDB = async (id: string) => {
 export const bookingServices = {
   createBookingIntoDB,
   getAllBookingFromDB,
+  myBookings,
   getSingleBookingFromDB,
   updateBookingIntoDB,
   deleteBookingFromDB,

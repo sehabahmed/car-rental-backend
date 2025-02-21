@@ -15,9 +15,15 @@ router.post(
 );
 
 router.get(
+  '/',
+  auth(USER_ROLE.admin),
+  BookingControlers.getAllBooking,
+);
+
+router.get(
   '/my-bookings',
   auth(USER_ROLE.user),
-  BookingControlers.getAllBooking,
+  BookingControlers.myBookings,
 );
 
 router.get('/:id', BookingControlers.getSingleBookingFromDB);
