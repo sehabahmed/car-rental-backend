@@ -12,6 +12,7 @@ const router = Router();
 
 router.post(
   '/create-car',
+  auth(USER_ROLE.admin),
   validateRequest(createCarValidationSchema),
   CarControllers.createCar,
 );
@@ -27,6 +28,6 @@ router.put(
   CarControllers.updateCarFromDB,
 );
 
-router.delete('/:id', CarControllers.deletedCarFromDB);
+router.delete('/:id', auth(USER_ROLE.admin), CarControllers.deletedCarFromDB);
 
 export const CarRoutes = router;
