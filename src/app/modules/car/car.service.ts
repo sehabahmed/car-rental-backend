@@ -1,4 +1,3 @@
-import { User } from '../users/user.model';
 import { TCar } from './car.interface';
 import { Car } from './car.model';
 

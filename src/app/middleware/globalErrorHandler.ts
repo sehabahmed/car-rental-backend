@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { ErrorRequestHandler } from 'express';
 import { TErrorSources } from '../interface/error';
 import { ZodError } from 'zod';
@@ -8,6 +9,7 @@ import handleDuplicateError from '../errors/handleDuplicateError';
 import AppError from '../errors/AppError';
 import config from '../index';
 
+// eslint-disable-next-line no-unused-vars
 const globalErrorHandler: ErrorRequestHandler = (err, req, res, next) => {
   //setting Default Values
   let statusCode = 500;

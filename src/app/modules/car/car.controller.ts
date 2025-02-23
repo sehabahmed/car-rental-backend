@@ -4,7 +4,6 @@ import { CarServices } from './car.service';
 import httpStatus from 'http-status';
 
 const createCar = catchAsync(async (req, res) => {
-  console.log('cookies', req.cookies);
 
   const result = await CarServices.createCarIntoDB(req.body);
 

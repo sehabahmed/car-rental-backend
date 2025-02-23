@@ -1,4 +1,3 @@
-import { tuple } from 'zod';
 import AppError from '../../errors/AppError';
 import catchAsync from '../utils/catchAsync';
 import sendResponse from '../utils/sendResponse';
