@@ -1,16 +1,15 @@
 import jwt from 'jsonwebtoken';
 
+type ExpiresIn = string | number;
+
 export const createToken = (
   jwtPayload: { userEmail: string; role: string },
-  secret: string,
-  expiresIn: string | number,
+  secret: jwt.Secret,
+  expiresIn: ExpiresIn,
 ) => {
   const token = jwt.sign(jwtPayload, secret, { expiresIn });
-
   return `Bearer ${token}`;
 };
-
-//extract token with Bearer
 
 export const extractToken = (bearerToken: string) => {
   if (!bearerToken?.startsWith('Bearer ')) {

@@ -48,8 +48,18 @@ userSchema.pre('save', async function (next) {
     const saltRounds = Number(config.bcrypt_salt_rounds);
     this.password = await bcrypt.hash(this.password, saltRounds);
     next();
+<<<<<<< HEAD
   } catch (error: any) {
     next(error);
+=======
+  } catch (error: unknown) {
+    if(error instanceof Error){
+
+      next(error);
+    } else {
+      next(new Error('An unknown error occurred while hashing the password.'))
+    }
+>>>>>>> bbef078 (authentication type error still has)
   }
 });
 
