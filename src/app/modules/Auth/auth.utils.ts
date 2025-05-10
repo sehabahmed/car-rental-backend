@@ -17,4 +17,5 @@ export const extractToken = (bearerToken: string) => {
   }
 
   return bearerToken.split(' ')[1];
+  
 };

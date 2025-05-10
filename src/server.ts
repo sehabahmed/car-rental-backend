@@ -1,35 +1,33 @@
-import mongoose from 'mongoose';
-import config from '../src/app/index';
 import app from './app';
+import config from '../src/app/index';
+import mongoose from 'mongoose';
+import { Server } from 'http';
 import logger from './logger';
-// import { Server } from 'http';
 
-// let server: Server;
+let server: Server;
 
 async function main() {
+  
   try {
     await mongoose.connect(config.database_url as string);
-    
-    app.listen(config.port, () => {
-      logger.info(`🚀 Server is running on Port ${config.port}`);
+
+    server = app.listen(config.port, () => {
+      logger.info(`This server is running on Port ${config.port}`);
     });
   } catch (error) {
-    logger.error('❌ Error during startup:', error);
-    process.exit(1);
+    logger.error(error);
   }
 }
 
 main();
 
-// process.on('unhandledRejection', (reason) => {
-//   logger.error(`😡 Unhandled Rejection detected, shutting down!...`, reason);
+process.on('unhandledRejection', () => {
+  logger.error(`😡 unhandledRejection is detected, shutting down!...`);
 
-//   if (server) {
-//     server.close(() => {
-//       logger.info('🔴 Server closed due to an unhandled rejection.');
-//       process.exit(1);
-//     });
-//   } else {
-//     process.exit(1);
-//   }
-// });
+  if (server) {
+    server.close(() => {
+      process.exit(1);
+    });
+  }
+  process.exit(1);
+});
