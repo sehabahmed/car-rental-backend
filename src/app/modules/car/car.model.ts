@@ -33,6 +33,10 @@ const carSchema = new Schema<TCar>(
       type: Number,
       required: true,
     },
+    location: {
+      type: String,
+      required: true,
+    },
     isDeleted: {
       type: Boolean,
       default: false,

@@ -49,8 +49,6 @@ userSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, saltRounds);
     next();
 
-  // } catch (error: any) {
-  //   next(error);
   } catch (error: unknown) {
     if(error instanceof Error){
 

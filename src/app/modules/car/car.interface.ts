@@ -6,5 +6,6 @@ export interface TCar {
   status: 'available' | 'unavailable';
   features: string[];
   pricePerHour: number;
+  location: string;
   isDeleted: boolean;
 }
