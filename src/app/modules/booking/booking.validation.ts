@@ -1,6 +1,9 @@
 import { z } from 'zod';
 import mongoose from 'mongoose';
 
+const TIME_REGEX = /^([01]\d|2[0-3]):([0-5]\d)$/;
+const TIME_FORMAT_ERROR = 'Invalid time format (HH:mm)';
+
 export const createBookingValidationSchema = z.object({
   body: z.object({
     date: z.string().refine((val) => !isNaN(Date.parse(val)), {
@@ -9,14 +12,9 @@ export const createBookingValidationSchema = z.object({
     car: z.string().refine((val) => mongoose.Types.ObjectId.isValid(val), {
       message: 'Invalid Car ID',
     }),
-    startTime: z
-      .string()
-      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid time format (HH:mm)'),
+    startTime: z.string().regex(TIME_REGEX, TIME_FORMAT_ERROR),
 
-    endTime: z
-      .string()
-      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid time format (HH:mm)')
-      .optional(),
+    endTime: z.string().regex(TIME_REGEX, TIME_FORMAT_ERROR).optional(),
   }),
 });
 
@@ -27,8 +25,6 @@ export const updateBookingValidationSchema = z.object({
       .refine((val) => mongoose.Types.ObjectId.isValid(val), {
         message: 'Invalid Car ID',
       }),
-    endTime: z
-      .string()
-      .regex(/^([01]\d|2[0-3]):([0-5]\d)$/, 'Invalid time format (HH:mm)'),
+    endTime: z.string().regex(TIME_REGEX, TIME_FORMAT_ERROR),
   }),
 });

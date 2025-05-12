@@ -19,6 +19,8 @@ router.post(
 
 router.get('/', CarControllers.getAllCars);
 
+router.get('/search', CarControllers.searchAvailableCars);
+
 router.get('/:id', CarControllers.getSingleCarFromDB);
 
 router.put(
@@ -29,5 +31,6 @@ router.put(
 );
 
 router.delete('/:id', auth(USER_ROLE.admin), CarControllers.deletedCarFromDB);
+
 
 export const CarRoutes = router;

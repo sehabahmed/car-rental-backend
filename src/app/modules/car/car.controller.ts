@@ -65,10 +65,30 @@ const deletedCarFromDB = catchAsync(async (req, res) => {
   });
 });
 
+
+const searchAvailableCars = catchAsync(async (req, res) => {
+  const { location, date, startTime, endTime } = req.query;
+
+  const result = await CarServices.searchAvailableCars(
+    location as string,
+    date as string,
+    startTime as string,
+    endTime as string | undefined
+  );
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Available cars retrieved successfully',
+    data: result,
+  });
+});
+
 export const CarControllers = {
   createCar,
   getAllCars,
   getSingleCarFromDB,
   updateCarFromDB,
   deletedCarFromDB,
+  searchAvailableCars,
 };
