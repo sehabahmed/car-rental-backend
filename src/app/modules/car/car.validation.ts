@@ -10,6 +10,7 @@ export const createCarValidationSchema = z.object({
     features: z.array(z.string()).default([]),
     pricePerHour: z.number().positive(),
     location: z.string({ required_error: 'Location is required' }),
+    img: z.string({ required_error: 'Image is required' }),
     isDeleted: z.boolean().default(false),
   }),
 });

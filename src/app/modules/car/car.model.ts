@@ -35,6 +35,10 @@ const carSchema = new Schema<TCar>(
     },
     location: {
       type: String,
+      required: true
+    },
+    img: {
+      type: String,
       required: true,
     },
     isDeleted: {

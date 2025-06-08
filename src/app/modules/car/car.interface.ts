@@ -7,5 +7,6 @@ export interface TCar {
   features: string[];
   pricePerHour: number;
   location: string;
+  img: string;
   isDeleted: boolean;
 }
