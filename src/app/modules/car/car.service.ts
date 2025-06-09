@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import logger from '../../../logger';
 import AppError from '../../errors/AppError';
 import { Booking } from '../booking/booking.model';
 import { TCar } from './car.interface';
@@ -132,7 +132,7 @@ export const searchAvailableCars = async (
 
     return availableCars;
   } catch (error: any) {
-    console.error('Error in searchAvailableCars:', error);
+    logger.error('Error in searchAvailableCars:', error);
     if (error instanceof AppError) {
       throw error;
     }
