@@ -92,10 +92,6 @@ export const searchAvailableCars = async (
     const availableCars = [];
 
     for (const car of cars) {
-      // if (!mongoose.Types.ObjectId.isValid(car)) {
-      //   console.log('Invalid car._id:', car);
-      //   continue;
-      // }
 
       const bookings = await Booking.find({
         car: car._id,

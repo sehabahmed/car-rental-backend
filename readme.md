@@ -1,4 +1,4 @@
-# Little explaination about this project.
+# Few explaination about this project.
 
 - This express node project is used by `TypeScript`
 - This backend site is made with real basis with following JSON Web Token with access Token and secret Token. 
